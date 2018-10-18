@@ -15,5 +15,29 @@ module ApiExemple
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    ## RSpec Configuration
+    config.generators do |g|
+      g.test_framework :rspec
+    end
+
+    ## Generators Configuration
+    config.generators do |g|
+      g.stylesheets = false
+      g.javascripts = false
+      g.helper      = false
+      g.assets      = false
+    end
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*',
+          headers: :any,
+          methods: %i(get post put patch delete options head)
+      end
+    end
+
+    config.middleware.use Rack::Attack
   end
 end
